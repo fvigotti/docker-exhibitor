@@ -1,0 +1,24 @@
+zkserver:
+  image: wurstmeister/zookeeper
+  environment:
+    - "SERVER_JVMFLAGS=-Xms250000000 -Xmx250000000"
+    - "ZOOCFGDIR=/opt/zookeeper/conf"
+  volumes:
+   - "zkconf:/opt/zookeeper/conf:ro" # application
+  mem_limit: "250000000"
+  restart: always
+  ports:
+   - "2181:2181"
+   - "2888:2888"
+   - "3888:3888"
+
+kafka:
+  image: fvigotti/kafka
+#  build: .
+  ports:
+    - "9092:9092"
+  links:
+    - zkserver:zk
+  environment:
+    - "KAFKA_ADVERTISED_HOST_NAME=localhost"
+    - "KAFKA_BROKER_ID=1"
