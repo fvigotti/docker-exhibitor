@@ -1,3 +1,4 @@
+#!/bin/sh
 #/bin/bash -e
 
 # Generates the default exhibitor config and launches exhibitor
@@ -10,11 +11,11 @@ DEFAULT_AWS_REGION="us-west-2"
 : ${AWS_REGION:=$DEFAULT_AWS_REGION}
 
 cat <<- EOF > /opt/exhibitor/defaults.conf
-	zookeeper-data-directory=/opt/zookeeper/snapshots
 	zookeeper-install-directory=/opt/zookeeper
-	zookeeper-log-directory=/opt/zookeeper/transactions
-	log-index-directory=/opt/zookeeper/transactions
-	cleanup-period-ms=300000
+	zookeeper-data-directory=/var/zookeeper/snapshots
+	zookeeper-log-directory=/var/zookeeper/transactions
+	log-index-directory=/var/zookeeper/transactions
+	cleanup-period-ms=${EXH_cleanup_period_ms:-'300000'}
 	check-ms=30000
 	backup-period-ms=600000
 	client-port=2181

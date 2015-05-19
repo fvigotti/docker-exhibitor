@@ -2,14 +2,14 @@ FROM fvigotti/docker-fatjdk8
 
 MAINTAINER fvigotti
 
-ENV ZK_VERSION="${ZK_VERSION}" SCALA_VERSION="2.10"
+ENV ZK_VERSION="3.4.6"
 
 
 ENV \
     ZK_RELEASE="http://www.apache.org/dist/zookeeper/zookeeper-${ZK_VERSION}/zookeeper-${ZK_VERSION}.tar.gz" \
     EXHIBITOR_POM="https://raw.githubusercontent.com/Netflix/exhibitor/d911a16d704bbe790d84bbacc655ef050c1f5806/exhibitor-standalone/src/main/resources/buildscripts/standalone/maven/pom.xml" \
     # Append "+" to ensure the package doesn't get purged
-    BUILD_DEPS="curl maven openjdk-7-jdk+" \
+    BUILD_DEPS="curl maven " \
     DEBIAN_FRONTEND="noninteractive"
 
 # Use one step so we can remove intermediate dependencies and minimize size
@@ -23,7 +23,7 @@ RUN \
 
     # Install ZK
     && curl -Lo /tmp/zookeeper.tgz $ZK_RELEASE \
-    && mkdir -p /opt/zookeeper/transactions /opt/zookeeper/snapshots \
+    && mkdir -p /var/zookeeper/transactions /var/zookeeper/snapshots \
     && tar -xzf /tmp/zookeeper.tgz -C /opt/zookeeper --strip=1 \
     && rm /tmp/zookeeper.tgz \
 
