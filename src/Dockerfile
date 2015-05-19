@@ -49,19 +49,3 @@ EXPOSE 2181 2888 3888 8181
 
 ENTRYPOINT ["bash", "-ex", "/opt/exhibitor/wrapper.sh"]
 
-
-
-
-
-
-
-
-VOLUME ["/kafka"]
-
-ADD start-kafka.sh /usr/bin/start-kafka.sh
-RUN chmod +x /usr/bin/start-kafka.sh
-
-ENV KAFKA_HOME /opt/kafka_${SCALA_VERSION}-${KAFKA_VERSION}
-
-CMD ["/bin/bash" , "start-kafka.sh"]
-
